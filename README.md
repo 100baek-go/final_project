@@ -50,12 +50,69 @@
 프로젝트를 사용하는 방법은 다음과 같습니다:
 
 1. 데이터 파일을 `data` 폴더에 위치시킵니다.
+
 2. 시스템 실행:
     ```bash
     python 마일리지_수강신청.py
     ```
-3. 자신의 배당할 마일리지, 신청 과목 수, 총이수학점비율, 직전학기 이수학점비율, 학년 값을 차례로 입력합니다. 
-  마일리지는 0 이상 36 이하의 범위로 입력해야 하며, 학년은 2 - 4 학년까지 입력해야 합니다. (나머지 데이터 값은 faulty input이 없다고 가정함.)
+3. 자신의 배당할 마일리지, 신청 과목 수, 총이수학점비율, 직전학기 이수학점비율, 학년 값을 차례로 입력합니다.
+    ```bash
+    mil = int(input("신청 과목에 넣을 마일리지를 입력하시오 : "))
+    num_S = int(input("신청 과목 수를 입력하시오 : "))
+    rate_T = float(input("총이수학점비율을 입력하시오 : "))
+    rate_B = float(input("직전학기 이수학점 비율을 입력하시오 : "))
+    my_Grade = int(input("학년을 입력하시오 : "))
+    ```
+   마일리지는 0 이상 36 이하의 범위로 입력해야 하며, 학년은 2 - 4 학년까지 입력해야 합니다. (나머지 데이터 값은 faulty input이 없다고 가정함.)
+    ```bash
+    if mil < 0 or mil > 36 :
+        print("잘못된 마일리지 값입니다.")
+    ```
+    ```bash
+    ~ ~ ~
+    else:
+        print("학년이 잘못 입력되었습니다.")
+    ```
+  
 4. 코드는 주어진 데이터 파일을 학년에 따라 분류하고, 입력받은 이의 데이터를 같은 학년의 list에 추가합니다.
-5. 이후 각 학년 별 list를 순차적으로 sort합니다.
-6. 입력받은 데이터의 사람이 어느 순위에 있는지 확인하고 수강 신청 성공 여부를 출력합니다. 이때 수강 신청에 실패한 경우, 대기번호를 출력합니다.    
+    ```bash
+    for k in range(len(text_final)):
+        grade=text_final[k][4]
+        if grade==2:
+            soph_list.append(text_final[k])
+        elif grade==3:
+            jun_list.append(text_final[k])
+        else:
+            sen_list.append(text_final[k])
+    ```
+   
+5. 이후 각 학년 별 list를 순차적으로 sort합니다. (3,4학년 코드 생략)
+    ```bash
+    if my_Grade == 2 :
+        i = 1
+        soph_list.append(my_List)
+        soph_list=sorted(soph_list, key=itemgetter(0,1,2,3), reverse=True)
+    ```
+
+6. 입력받은 데이터의 사람이 어느 순위에 있는지 확인하고 수강 신청 성공 여부를 출력합니다. 이때 수강 신청에 실패한 경우, 대기번호를 출력합니다. (3,4학년 코드 생략)
+    ```bash
+    if my_Grade == 2 :
+    for m in range(len(soph_list)):
+        if soph_list[m] == my_List :
+            R = m + 1
+    v = soph_num - R
+    if v < 0 :
+        res = 'Fail'
+        wai = -v
+    else:
+        res = 'Success'
+    ```
+    ```bash
+    if res == 'Success' :
+        print(f"순위 : {R}")
+        print("수강 신청에 성공하셨습니다.\n")
+    elif res == 'Fail' :
+        print(f"순위 : {R}")
+        print("수강 신청에 실패하셨습니다.")
+        print(f"대기번호 : {wai}\n")
+    ```
